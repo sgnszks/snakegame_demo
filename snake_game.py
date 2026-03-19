@@ -284,11 +284,11 @@ class SnakeGame:
             eye2 = (x2 - 5, y2 - 5)
 
         for ex, ey in (eye1, eye2):
-            # 白色眼白
+            # 红色眼白
             self.canvas.create_oval(
                 ex - EYE_R, ey - EYE_R,
                 ex + EYE_R, ey + EYE_R,
-                fill="white", outline="",
+                fill="red", outline="",
             )
             # 黑色瞳孔，偏向运动方向
             self.canvas.create_oval(
