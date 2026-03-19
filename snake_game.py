@@ -251,6 +251,52 @@ class SnakeGame:
                 outline="",
             )
 
+        self._draw_head_eyes()
+
+    def _draw_head_eyes(self) -> None:
+        """根据当前移动方向在蛇头上绘制两只眼睛。
+
+        眼睛由白色外圆和黑色瞳孔组成，始终朝向运动方向。
+        """
+        x1, y1, x2, y2 = self.cell_to_pixels(self.snake[0])
+        dx, dy = self.direction
+
+        # 眼睛半径与瞳孔半径（像素）
+        EYE_R = 2
+        PUPIL_R = 1
+
+        # 根据方向计算两只眼睛的圆心坐标
+        # 眼睛位于蛇头前缘附近，左右各一只
+        cx = (x1 + x2) // 2
+        cy = (y1 + y2) // 2
+
+        if dx == 1 and dy == 0:       # 向右
+            eye1 = (x2 - 5, y1 + 5)
+            eye2 = (x2 - 5, y2 - 5)
+        elif dx == -1 and dy == 0:    # 向左
+            eye1 = (x1 + 5, y1 + 5)
+            eye2 = (x1 + 5, y2 - 5)
+        elif dx == 0 and dy == -1:    # 向上
+            eye1 = (x1 + 5, y1 + 5)
+            eye2 = (x2 - 5, y1 + 5)
+        else:                         # 向下
+            eye1 = (x1 + 5, y2 - 5)
+            eye2 = (x2 - 5, y2 - 5)
+
+        for ex, ey in (eye1, eye2):
+            # 白色眼白
+            self.canvas.create_oval(
+                ex - EYE_R, ey - EYE_R,
+                ex + EYE_R, ey + EYE_R,
+                fill="white", outline="",
+            )
+            # 黑色瞳孔，偏向运动方向
+            self.canvas.create_oval(
+                ex - PUPIL_R + dx, ey - PUPIL_R + dy,
+                ex + PUPIL_R + dx, ey + PUPIL_R + dy,
+                fill="black", outline="",
+            )
+
     def draw_overlay(self) -> None:
         """Render the game over message."""
         self.canvas.create_rectangle(
