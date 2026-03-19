@@ -75,8 +75,9 @@ class SnakeGame:
         center_y = GRID_HEIGHT // 2
 
         self.snake = [
-            (center_x - i, center_y)
-            for i in range(8)
+            (center_x, center_y),
+            (center_x - 1, center_y),
+            (center_x - 2, center_y),
         ]
         self.direction = (1, 0)
         self.pending_direction = self.direction
